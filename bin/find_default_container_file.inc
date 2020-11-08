@@ -3,7 +3,7 @@
 if groups | grep docker > /dev/null 2>&1; then
     DOCKER_BINARY=docker
 else
-    DOCKER_BINARY=sudo docker
+    DOCKER_BINARY="sudo docker"
 fi
 
 function findContainerName {
