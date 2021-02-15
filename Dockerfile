@@ -7,7 +7,8 @@ RUN apt-get update && \
     apt-get -y install gitk git-gui && \
     apt-get -y install cmake-curses-gui gdb valgrind sysvinit-utils && \
     apt-get -y install mirage && \
-    apt-get -y install mesa-utils
+    apt-get -y install mesa-utils && \
+    apt-get -y install libxcb-icccm4 libxcb-image0 libxcb-render-util0 libxcb-xinerama0
 
 ENV USRHOME=/home/appimage
 
