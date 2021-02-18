@@ -1,0 +1,89 @@
+#!/bin/bash
+
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source ${DIR}/find_default_container_file.inc
+
+container_name=$(findContainerName $*)
+if [ -z ${container_name} ]; then
+    exit 1
+fi
+
+ROOT_DIR="$(realpath $DIR/../)"
+
+REMOVE_OLD_IMAGE=0
+JOBS=`nproc`
+MRS_ARRAY=()
+
+usage=\
+"Usage: $(basename "$0") [OPTION] <MR1> <MR2> <MR3>...\n
+Creates a set of clones of the current container for \n
+the MRs passed as argumets \n
+\n
+To flush the cache before the first build pass '-f' option. \n
+\n
+where:\n
+    -h,      --help              show this help text\n
+    -f,      --flush             flush cached image\n
+    -jN,     --jobs=N            use N parallel jobs, default value is \`nproc\`\n
+    "
+
+
+# Call getopt to validate the provided input. 
+options=$(getopt -o fj:h --long flush-cache,jobs:,help -- "$@")
+[ $? -eq 0 ] || { 
+    echo "Incorrect options provided"
+    exit 1
+}
+eval set -- "$options"
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+    -f | --flush-cache)
+        REMOVE_OLD_IMAGE=1
+        ;;
+    -j | --jobs)
+        shift;
+        JOBS=$1
+        ;;
+    -h | --help)
+        echo -e $usage >&2
+        exit 1
+        ;;
+    --)
+        shift
+        break
+        ;;
+    esac
+    shift
+done
+
+while [[ $# -gt 0 ]]; do
+    MRS_ARRAY+=("$1")
+    shift
+done
+
+# remove cached container image if requested
+if [ $REMOVE_OLD_IMAGE -ne 0 ]; then
+    $ROOT_DIR/bin/update-clones-cache-image -rub | tee log-update-image.log
+    if [ $? -ne 0 ]; then
+        echo Failed to update docker image. Aborting...
+    fi
+fi
+
+FAILED_MRS=()
+
+for mr in "${MRS_ARRAY[@]}"; do
+    echo Buildning MR $mr...
+    $ROOT_DIR/bin/spawn-clone -m$mr -b -j$JOBS | tee log-mr-$mr.log
+    if [ $? -ne 0 ]; then
+        echo Failed to build MR $mr...
+        FAILED_MRS+=("$mr")
+    fi
+done
+
+for mr in "${FAILED_MRS[@]}"; do
+    echo
+    echo Failed to build MR $mr...
+    echo
+    tail -n20 log-mr-$mr.log
+    echo
+done
