@@ -134,6 +134,8 @@ if [ -z $CLONE_NAME ]; then
     fi
 fi
 
+CLONE_NAME=$(echo $CLONE_NAME | sed -e 's/\//-/g')
+
 if [ -z "$CLONE_ROOT" ]; then
     CLONE_ROOT=$ROOT_DIR/clones/$CLONE_NAME
 fi
