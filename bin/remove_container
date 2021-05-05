@@ -16,3 +16,10 @@ fi
 
 ${DOCKER_BINARY} rm ${container_name}
 rm $DIR/../.container_name
+
+spawn_clone_image_name=$(${DOCKER_BINARY} image ls -q -f "reference=$container_name:clone-spawn")
+
+if [ -n ${spawn_clone_image_name} ]; then 
+    echo $spawn_clone_image_name
+    ${DOCKER_BINARY} image rm $spawn_clone_image_name
+fi 
