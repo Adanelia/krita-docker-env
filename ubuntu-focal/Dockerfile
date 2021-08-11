@@ -53,6 +53,12 @@ RUN useradd -d /home/appimage/ -u 1000 --user-group --create-home -G video appim
 # Get locales in order
 RUN locale-gen en_US en_US.UTF-8 en_NZ.UTF-8
 
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 10
+RUN update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-11 20
+
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-9 10
+RUN update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-11 20
+
 # Switch over to our new user and add in the utilities needed for appimage builds
 USER appimage
 COPY setup-utilities /home/appimage/
