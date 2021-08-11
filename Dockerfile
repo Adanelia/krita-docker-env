@@ -3,10 +3,10 @@ FROM kdeorg/appimage-ubuntu1604
 MAINTAINER Dmitry Kazakov <dimula73@gmail.com>
 RUN apt-get update && \
     apt-get -y install curl && \
-    apt-get -y install emacs24-nox && \
+    apt-get -y install emacs-nox && \
     apt-get -y install gitk git-gui && \
     apt-get -y install cmake-curses-gui gdb valgrind sysvinit-utils && \
-    apt-get -y install mirage && \
+    apt-get -y install nomacs && \
     apt-get -y install mesa-utils && \
     apt-get -y install libxcb-icccm4 libxcb-image0 libxcb-render-util0 libxcb-xinerama0
 

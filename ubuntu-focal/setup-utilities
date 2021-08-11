@@ -1,0 +1,22 @@
+#!/bin/bash
+
+# If anything goes wrong, bail
+set -e
+
+# We need the appimage builder
+cd ~/
+wget -c -nv "https://github.com/probonopd/linuxdeployqt/releases/download/continuous/linuxdeployqt-continuous-x86_64.AppImage" -O linuxdeployqt
+chmod a+x linuxdeployqt
+./linuxdeployqt --appimage-extract
+rsync -rav ~/squashfs-root/usr/ ~/tools/
+rm -rf ~/squashfs-root/ ~/linuxdeployqt
+
+# Next thing to do: patchelf
+mkdir ~/patchelf-build/
+cd ~/patchelf-build/
+wget  -c -nv https://nixos.org/releases/patchelf/patchelf-0.9/patchelf-0.9.tar.bz2
+tar -xf patchelf-0.9.tar.bz2
+cd patchelf-0.9
+./configure -prefix=$HOME/tools/
+make -j4 install
+rm -rf ~/patchelf-build/
