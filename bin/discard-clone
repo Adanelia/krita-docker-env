@@ -4,21 +4,32 @@ DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
 ROOT_DIR="$(realpath $DIR/../)"
 
-CLONE_DIR=$1
+CLONES_ARRAY=()
 
-if [ ! -d $CLONE_DIR ]; then
-    echo "Clone \"$CLONE_DIR\" does not exist"
-    exit 1
-fi
+while [[ $# -gt 0 ]]; do
+    CLONES_ARRAY+=("$1")
+    shift
+done
 
-if [ ! -f $CLONE_DIR/.container_name ]; then
-    echo "Container file \"$CLONE_DIR/.container_name\" is not found"
-    exit 2
-fi
+for CLONE_DIR in "${CLONES_ARRAY[@]}"; do
+    echo Removing clone $CLONE_DIR...
+    
+    if [ ! -d $CLONE_DIR ]; then
+        echo "Clone \"$CLONE_DIR\" does not exist"
+        exit 1
+    fi
 
-(
-    cd $CLONE_DIR
-    ./bin/remove_container
-)
+    if [ ! -f $CLONE_DIR/.container_name ]; then
+        echo "Container file \"$CLONE_DIR/.container_name\" is not found"
+        exit 2
+    fi
 
-rm -rf $CLONE_DIR
+    (
+        cd $CLONE_DIR
+        ./bin/remove_container
+    )
+
+    rm -rf $CLONE_DIR
+    
+done
+
