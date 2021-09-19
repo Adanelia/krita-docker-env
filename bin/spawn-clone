@@ -156,7 +156,9 @@ fi
 pushd $ROOT_DIR/persistent/krita
     
 if [ -n "$CHECKOUT_SHA" ]; then
-    git checkout $CHECKOUT_SHA || exit 1
+    # we will do the checkout a bit later after
+    # we do the full copy of the repository
+    true
 elif [ -n "$FETCH_URL" ]; then
     git fetch $FETCH_URL || exit 1
     CHECKOUT_SHA=FETCH_HEAD
