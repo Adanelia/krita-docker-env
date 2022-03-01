@@ -1,4 +1,4 @@
-FROM kdeorg/appimage-ubuntu1804
+FROM kdeorg/appimage-1804
 
 MAINTAINER Dmitry Kazakov <dimula73@gmail.com>
 RUN apt-get update && \
