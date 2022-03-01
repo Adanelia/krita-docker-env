@@ -2,6 +2,7 @@ prepend() { [ -d "$2" ] && eval $1=\"$2\$\{$1:+':'\$$1\}\" && export $1 ; }
 
 export KRITADIR=/home/appimage/appimage-workspace/krita.appdir/usr
 export DEPSDIR=/home/appimage/appimage-workspace/deps/usr
+export QML2_IMPORT_PATH=$KRITADIR/lib/x86_64-linux-gnu/qml
 
 
 prepend PATH $KRITADIR/bin
@@ -14,6 +15,7 @@ prepend PKG_CONFIG_PATH $KRITADIR/lib/pkgconfig
 prepend PATH $DEPSDIR/bin
 prepend LD_LIBRARY_PATH $DEPSDIR/lib64
 prepend LD_LIBRARY_PATH $DEPSDIR/lib
+prepend LD_LIBRARY_PATH $DEPSDIR/lib/x86_64-linux-gnu
 #prepend XDG_DATA_DIRS $DEPSDIR/share
 prepend PKG_CONFIG_PATH $DEPSDIR/lib64/pkgconfig
 prepend PKG_CONFIG_PATH $DEPSDIR/lib/pkgconfig
