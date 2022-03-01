@@ -1,4 +1,4 @@
-FROM kdeorg/appimage-ubuntu1604
+FROM kdeorg/appimage-ubuntu1804
 
 MAINTAINER Dmitry Kazakov <dimula73@gmail.com>
 RUN apt-get update && \
@@ -10,8 +10,8 @@ RUN apt-get update && \
     apt-get -y install mesa-utils && \
     apt-get -y install libxcb-icccm4 libxcb-image0 libxcb-render-util0 libxcb-xinerama0
 
-RUN update-alternatives --set gcc /usr/bin/gcc-9
-RUN update-alternatives --set g++ /usr/bin/g++-9
+RUN update-alternatives --set gcc /usr/bin/gcc-7
+RUN update-alternatives --set g++ /usr/bin/g++-7
     
 ENV USRHOME=/home/appimage
 
