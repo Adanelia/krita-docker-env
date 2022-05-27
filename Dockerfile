@@ -10,8 +10,8 @@ RUN apt-get update && \
     apt-get -y install mesa-utils && \
     apt-get -y install libxcb-icccm4 libxcb-image0 libxcb-render-util0 libxcb-xinerama0
 
-RUN update-alternatives --set gcc /usr/bin/gcc-7
-RUN update-alternatives --set g++ /usr/bin/g++-7
+RUN update-alternatives --set gcc /usr/bin/gcc-11
+RUN update-alternatives --set g++ /usr/bin/g++-11
     
 ENV USRHOME=/home/appimage
 
