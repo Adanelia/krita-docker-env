@@ -8,13 +8,21 @@ where:\n
     -h,      --help              show this help text\n
     -jN,     --jobs=N            use N parallel jobs, default value is \`nproc\`\n
     -r,      --run               run Krita after building\n
+             --krita-asan        build Krita with address sanitizer active
+             --deps              build Krita deps
+             --qt-asan           enable address sanitizer for Qt (implies --qt-debug)
+             --qt-debug          enable debugging info for Qt
 "
 
 RUN_KRITA=0
 JOBS=`nproc`
+BUILD_DEPS=0
+QT_DEBUG=0
+QT_ASAN=0
+
 
 # Call getopt to validate the provided input. 
-options=$(getopt -o rj:h --long run,jobs:,help -- "$@")
+options=$(getopt -o rj:h --long run,jobs:,help,krita-asan,deps,qt-asan,qt-debug -- "$@")
 [ $? -eq 0 ] || { 
     echo "Incorrect options provided"
     exit 1
@@ -32,6 +40,20 @@ while true; do
     -h | --help)
         echo -e $usage >&2
         exit 1
+        ;;
+    --krita-asan)
+        KRITA_EXTRA_CMAKE_OPTIONS="-DECM_ENABLE_SANITIZERS=\'address\'"
+        ;;
+    --deps)
+        BUILD_DEPS=1
+        ;;
+    --qt-asan)
+        QT_ASAN=1
+        BUILD_DEPS=1
+        ;;
+    --qt-debug)
+        QT_DEBUG=1
+        BUILD_DEPS=1
         ;;
     --)
         shift
@@ -51,10 +73,28 @@ fi
 
 tryStartContainer $container_name
 
+if [ $BUILD_DEPS -eq 1 ]; then
+    if [ $QT_DEBUG -eq 1 ]; then
+        DEPS_CMAKE_ENV="QT_ENABLE_DEBUG_INFO=1"
+    fi
+
+    if [ $QT_ASAN -eq 1 ]; then
+        DEPS_CMAKE_ENV+="QT_ENABLE_ASAN=1"
+        echo "Building Qt with ASAN is not implemented yet. Exiting..."
+        exit 1
+    fi
+
+    ${DOCKER_BINARY} exec -ti ${container_name} \
+        bash -i -c "cd /home/appimage/appimage-workspace/ && $DEPS_CMAKE_ENV ~/persistent/krita/packaging/linux/appimage/build-deps.sh ~/appimage-workspace ~/persistent/krita" || exit 1
+fi
+
+${DOCKER_BINARY} exec -ti ${container_name} \
+        bash -i -c "cd /home/appimage/appimage-workspace/krita-build && if [[ ! -f CMakeCache.txt ]]; then ~/bin/run_cmake.sh ${KRITA_EXTRA_CMAKE_OPTIONS} ~/persistent/krita; fi" || exit 2
+
 if [ $RUN_KRITA -eq 0 ]; then
     ${DOCKER_BINARY} exec -ti ${container_name} \
-        bash -i -c "cd /home/appimage/appimage-workspace/krita-build && make -j$JOBS install"
+        bash -i -c "cd /home/appimage/appimage-workspace/krita-build && make -j$JOBS install" || exit 3
 else
     ${DOCKER_BINARY} exec -ti ${container_name} \
-        bash -i -c "cd /home/appimage/appimage-workspace/krita-build && make -j$JOBS install && krita"
+        bash -i -c "cd /home/appimage/appimage-workspace/krita-build && make -j$JOBS install && krita" || exit 3
 fi

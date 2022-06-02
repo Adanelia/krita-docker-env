@@ -1,4 +1,4 @@
-FROM kdeorg/appimage-1804
+FROM kdeorg/appimage-1804 as base_image
 
 MAINTAINER Dmitry Kazakov <dimula73@gmail.com>
 RUN apt-get update && \
@@ -37,12 +37,16 @@ COPY ./default-home/run_cmake.sh \
      ./default-home/build_krita_appimage.sh \
      ${USRHOME}/bin/
 
-ADD persistent/krita-appimage-deps.tar ${USRHOME}/appimage-workspace/
-
 RUN chown appimage:appimage -R ${USRHOME}/
 RUN chmod a+rwx /tmp
 
 USER appimage
+
+CMD tail -f /dev/null
+
+FROM base_image
+
+ADD persistent/krita-appimage-deps.tar ${USRHOME}/appimage-workspace/
 
 CMD tail -f /dev/null
 
