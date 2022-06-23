@@ -80,8 +80,6 @@ if [ $BUILD_DEPS -eq 1 ]; then
 
     if [ $QT_ASAN -eq 1 ]; then
         DEPS_CMAKE_ENV+="QT_ENABLE_ASAN=1"
-        echo "Building Qt with ASAN is not implemented yet. Exiting..."
-        exit 1
     fi
 
     ${DOCKER_BINARY} exec -ti ${container_name} \
