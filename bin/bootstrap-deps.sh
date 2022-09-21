@@ -16,8 +16,8 @@ if [ ! -f ./persistent/krita-appimage-deps.tar ]; then
     )
 fi
 
-creator_major=4.14
-creator_minor=0
+creator_major=4.15
+creator_minor=2
 creator_file=qt-creator-opensource-linux-x86_64-${creator_major}.${creator_minor}.run
 if [ ! -f ./persistent/${creator_file} ]; then
     (
