@@ -46,8 +46,11 @@ CMD tail -f /dev/null
 
 FROM base_image
 
-ADD persistent/krita-appimage-deps.ta[r] ${USRHOME}/appimage-workspace/
-ADD persistent/qtcreator-package.tar.g[z] ${USRHOME}/
+
+# a hackish way to copy the deps only if they exist
+ADD .foo persistent/krita-appimage-deps.ta[r] ${USRHOME}/appimage-workspace/
+ADD .foo persistent/qtcreator-package.tar.g[z] ${USRHOME}/
+RUN rm ${USRHOME}/appimage-workspace/.foo ${USRHOME}/.foo
 
 CMD tail -f /dev/null
 
