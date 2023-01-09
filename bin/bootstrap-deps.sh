@@ -16,13 +16,9 @@ if [ ! -f ./persistent/krita-appimage-deps.tar ]; then
     )
 fi
 
-creator_major=4.15
-creator_minor=2
-creator_file=qt-creator-opensource-linux-x86_64-${creator_major}.${creator_minor}.run
-if [ ! -f ./persistent/${creator_file} ]; then
+if [ ! -f ./persistent/qtcreator-package.tar.gz ]; then
     (
         cd ./persistent/
-        wget http://download.qt.io/official_releases/qtcreator/${creator_major}/${creator_major}.${creator_minor}/${creator_file} -o qt-creator-opensource-linux-x86_64.run || exit 1
-        chmod a+x ${creator_file}
+        wget https://files.kde.org/krita/build/qtcreator-package.tar.gz -o qtcreator-package.tar.gz || exit 1
     )
 fi

@@ -46,7 +46,8 @@ CMD tail -f /dev/null
 
 FROM base_image
 
-ADD persistent/krita-appimage-deps.tar ${USRHOME}/appimage-workspace/
+ADD persistent/krita-appimage-deps.ta[r] ${USRHOME}/appimage-workspace/
+ADD persistent/qtcreator-package.tar.g[z] ${USRHOME}/
 
 CMD tail -f /dev/null
 
