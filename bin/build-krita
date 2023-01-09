@@ -8,10 +8,10 @@ where:\n
     -h,      --help              show this help text\n
     -jN,     --jobs=N            use N parallel jobs, default value is \`nproc\`\n
     -r,      --run               run Krita after building\n
-             --krita-asan        build Krita with address sanitizer active
-             --deps              build Krita deps
-             --qt-asan           enable address sanitizer for Qt (implies --qt-debug)
-             --qt-debug          enable debugging info for Qt
+             --krita-asan        build Krita with address sanitizer active\n
+             --deps              build Krita deps\n
+             --qt-asan           enable address sanitizer for Qt (implies --qt-debug)\n
+             --qt-debug          enable debugging info for Qt\n
 "
 
 RUN_KRITA=0
