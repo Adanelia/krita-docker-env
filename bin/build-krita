@@ -9,6 +9,7 @@ where:\n
     -jN,     --jobs=N            use N parallel jobs, default value is \`nproc\`\n
     -r,      --run               run Krita after building\n
     -n,      --no-pch            disable the usage of PCH headers
+    -t,      --no-tests          disable building of tests
              --krita-asan        build Krita with address sanitizer active\n
              --deps              build Krita deps\n
              --qt-asan           enable address sanitizer for Qt (implies --qt-debug)\n
@@ -21,10 +22,11 @@ BUILD_DEPS=0
 QT_DEBUG=0
 QT_ASAN=0
 ENABLE_PCH=1
+ENABLE_TESTS=1
 
 
 # Call getopt to validate the provided input. 
-options=$(getopt -o nrj:h --long no-pch,run,jobs:,help,krita-asan,deps,qt-asan,qt-debug -- "$@")
+options=$(getopt -o tnrj:h --long no-tests,no-pch,run,jobs:,help,krita-asan,deps,qt-asan,qt-debug -- "$@")
 [ $? -eq 0 ] || { 
     echo "Incorrect options provided"
     exit 1
@@ -41,6 +43,9 @@ while true; do
         ;;
     -n | --no-pch)
         ENABLE_PCH=0
+        ;;
+    -t | --no-tests)
+        ENABLE_TESTS=0
         ;;
     -h | --help)
         echo -e $usage >&2
@@ -68,7 +73,7 @@ while true; do
     shift
 done
 
-KRITA_EXTRA_CMAKE_OPTIONS="$KRITA_EXTRA_CMAKE_OPTIONS -DKRITA_ENABLE_PCH=$ENABLE_PCH"
+KRITA_EXTRA_CMAKE_OPTIONS="$KRITA_EXTRA_CMAKE_OPTIONS -DKRITA_ENABLE_PCH=$ENABLE_PCH -DBUILD_TESTING=$ENABLE_TESTS"
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source ${DIR}/find_default_container_file.inc
