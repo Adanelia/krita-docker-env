@@ -1,4 +1,4 @@
-FROM kdeorg/appimage-1804 as base_image
+FROM kdeorg/appimage-2004 as base_image
 
 MAINTAINER Dmitry Kazakov <dimula73@gmail.com>
 RUN apt-get update && \
@@ -7,8 +7,7 @@ RUN apt-get update && \
     apt-get -y install gitk git-gui && \
     apt-get -y install cmake-curses-gui gdb valgrind sysvinit-utils && \
     apt-get -y install nomacs && \
-    apt-get -y install mesa-utils && \
-    apt-get -y install libxcb-icccm4 libxcb-image0 libxcb-render-util0 libxcb-xinerama0
+    apt-get -y install mesa-utils
 
 RUN update-alternatives --set gcc /usr/bin/gcc-11
 RUN update-alternatives --set g++ /usr/bin/g++-11
