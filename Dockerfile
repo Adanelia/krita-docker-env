@@ -1,4 +1,4 @@
-FROM kdeorg/appimage-2004 as base_image
+FROM invent-registry.kde.org/sysadmin/ci-images/krita-appimage-builder as base_image
 
 MAINTAINER Dmitry Kazakov <dimula73@gmail.com>
 RUN apt-get update && \
