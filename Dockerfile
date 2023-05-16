@@ -1,6 +1,8 @@
 FROM invent-registry.kde.org/sysadmin/ci-images/krita-appimage-builder as base_image
-
 MAINTAINER Dmitry Kazakov <dimula73@gmail.com>
+
+USER root
+
 RUN apt-get update && \
     apt-get -y install curl && \
     apt-get -y install emacs-nox && \
@@ -44,7 +46,6 @@ USER appimage
 CMD tail -f /dev/null
 
 FROM base_image
-
 
 # a hackish way to copy the deps only if they exist
 ADD .foo persistent/krita-appimage-deps.ta[r] ${USRHOME}/appimage-workspace/
