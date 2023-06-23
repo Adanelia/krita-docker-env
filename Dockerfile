@@ -13,7 +13,7 @@ RUN apt-get update && \
 
 RUN update-alternatives --set gcc /usr/bin/gcc-11
 RUN update-alternatives --set g++ /usr/bin/g++-11
-    
+
 ENV USRHOME=/home/appimage
 
 RUN chsh -s /bin/bash appimage
@@ -54,5 +54,3 @@ ADD .foo persistent/qtcreator-package.tar.g[z] ${USRHOME}/
 RUN rm ${USRHOME}/appimage-workspace/deps/usr/.foo ${USRHOME}/.foo
 
 CMD tail -f /dev/null
-
-
