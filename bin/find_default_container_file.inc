@@ -1,5 +1,8 @@
 #!/bin/bash
 
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+source ${DIR}/try_create_pulseaudio_socket.inc
+
 if groups | grep docker > /dev/null 2>&1; then
     DOCKER_BINARY=docker
 else
@@ -40,6 +43,7 @@ function tryStartContainer {
     container_id=$(${DOCKER_BINARY} ps -q -f "status=running" -f "name=$container_name")
 
     if [ -z ${container_id} ]; then
+        tryCreatePulseaudioSocket
         ${DOCKER_BINARY} start ${container_name}
     fi
 }
