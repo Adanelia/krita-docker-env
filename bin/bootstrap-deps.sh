@@ -9,9 +9,9 @@ if [ ! -f ./persistent/krita-appimage-deps.tar ]; then
         cd ./persistent/
 
         if wget --version | grep \\-lz > /dev/null; then
-            wget --compression=auto https://binary-factory.kde.org/job/Krita_Nightly_Appimage_Dependency_Build/lastSuccessfulBuild/artifact/krita-appimage-deps.tar || exit 1
+            wget --compression=auto https://files.kde.org/krita/dependencies/krita-appimage-deps.tar || exit 1
         else
-            curl -LO --compressed https://binary-factory.kde.org/job/Krita_Nightly_Appimage_Dependency_Build/lastSuccessfulBuild/artifact/krita-appimage-deps.tar || exit 1
+            curl -LO --compressed https://files.kde.org/krita/dependencies/krita-appimage-deps.tar || exit 1
         fi
     )
 fi
