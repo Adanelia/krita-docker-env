@@ -43,6 +43,25 @@ cp -r /path/to/sources/krita ./persistent/krita
 ./bin/run_container krita-deps krita-auto-1
 ```
 
+## Cleanup the dependencies
+
+The dependencies are cached in `~/persistent/deps/` folder. It may occupy
+up to 4.7 GiB. If you happen to have problems with space, make sure you
+removed all the cached checkout:
+
+```bash
+# clean up about 2.4 GiB of the cached deps checkout
+rm -rf ~/persistent/deps/_install
+```
+
+If you need more space, you can freely remove the entire deps cache
+(it will be automatically refetched on the next call to `./bin/bootstrap-deps.sh`)
+
+```bash
+# clean up everything
+rm -rf ~/persistent/deps/
+```
+
 ## Enter the container and build Krita
 
 ```bash
