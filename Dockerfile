@@ -28,6 +28,7 @@ RUN echo 'export LC_ALL=en_US.UTF-8' >> ${USRHOME}/.bashrc && \
 
 RUN mkdir -p ${USRHOME}/appimage-workspace/krita.appdir/usr && \
     mkdir -p ${USRHOME}/appimage-workspace/krita-build && \
+    mkdir -p ${USRHOME}/appimage-workspace/deps/usr && \
     mkdir -p ${USRHOME}/bin
 
 COPY ./default-home/devenv.inc \
@@ -48,9 +49,9 @@ CMD tail -f /dev/null
 FROM base_image
 
 # a hackish way to copy the deps only if they exist
-ADD .foo persistent/krita-appimage-deps.ta[r] ${USRHOME}/appimage-workspace/
+COPY .foo persistent/deps/_install/ ${USRHOME}/appimage-workspace/deps/usr/
 ADD .foo persistent/qtcreator-package.tar.g[z] ${USRHOME}/
-RUN rm ${USRHOME}/appimage-workspace/.foo ${USRHOME}/.foo
+RUN rm ${USRHOME}/appimage-workspace/deps/usr/.foo ${USRHOME}/.foo
 
 CMD tail -f /dev/null
 

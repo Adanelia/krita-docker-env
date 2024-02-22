@@ -4,17 +4,7 @@ if [ ! -d ./persistent ]; then
     mkdir ./persistent
 fi
 
-if [ ! -f ./persistent/krita-appimage-deps.tar ]; then
-    (
-        cd ./persistent/
-
-        if wget --version | grep \\-lz > /dev/null; then
-            wget --compression=auto https://files.kde.org/krita/dependencies/krita-appimage-deps.tar || exit 1
-        else
-            curl -LO --compressed https://files.kde.org/krita/dependencies/krita-appimage-deps.tar || exit 1
-        fi
-    )
-fi
+./bin/bootstrap-krita-deps.sh
 
 if [ ! -f ./persistent/qtcreator-package.tar.gz ]; then
     (
