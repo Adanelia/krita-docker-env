@@ -51,7 +51,7 @@ removed all the cached checkout:
 
 ```bash
 # clean up about 2.4 GiB of the cached deps checkout
-rm -rf ~/persistent/deps/_install
+rm -rf ./persistent/deps/_install
 ```
 
 If you need more space, you can freely remove the entire deps cache
@@ -59,7 +59,7 @@ If you need more space, you can freely remove the entire deps cache
 
 ```bash
 # clean up everything
-rm -rf ~/persistent/deps/
+rm -rf ./persistent/deps/
 ```
 
 ## Enter the container and build Krita
