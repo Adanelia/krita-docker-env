@@ -73,7 +73,7 @@ rm -rf ./persistent/deps/
 # ... now your are inside the container with all the deps prepared ...
 
 # build Krita as usual
-cd appimage-workspace/krita-build/
+cd ~/appimage-workspace/krita-build/
 run_cmake.sh ~/persistent/krita
 make -j8 install
 
@@ -156,16 +156,13 @@ You can build multiple merge requests at once!
 
 ## Extra developer tools
 
-To install QtCreator, enter container and start the installer, downloaded while
-fetching dependencies. Make sure you install it into '~/qtcreator' directory
-without any version suffixes, then you will be able to use the script below:
+To install QtCreator run the install script:
 
 ```bash
-# inside the container
-./persistent/qt-creator-opensource-linux-x86_64.run
+./bin/install_qtcreator.sh
 ```
 
-To start QtCreator:
+Then you can start QtCreator:
 
 ```bash
 # from the host

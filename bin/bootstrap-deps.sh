@@ -9,6 +9,6 @@ fi
 if [ ! -f ./persistent/qtcreator-package.tar.gz ]; then
     (
         cd ./persistent/
-        wget https://files.kde.org/krita/build/qtcreator-package.tar.gz -o qtcreator-package.tar.gz || exit 1
+        wget https://files.kde.org/krita/build/qtcreator-package.tar.gz -O ./qtcreator-package.tar.gz || exit 1
     )
 fi
