@@ -58,6 +58,11 @@ if [[ -d $(pwd)/persistent/downloads ]]; then
     EXTRA_DOCKER_MOUNTS="-v $(pwd)/persistent/downloads:/home/appimage/appimage-workspace/downloads:rw"
 fi
 
+KVM_OPTS=
+if [[ -e /dev/kvm ]]; then
+   KVM_OPTS+="--device /dev/kvm"
+fi
+
 tryCreatePulseaudioSocket
 
 ${DOCKER_BINARY} run -P -t -d \
@@ -78,6 +83,7 @@ ${DOCKER_BINARY} run -P -t -d \
   --volume /tmp/pulseaudio-docker.socket:/tmp/pulseaudio-docker.socket \
   --volume /tmp/pulseaudio.client.conf:/etc/pulse/client.conf \
   $NVIDIA_OPTS \
+  $KVM_OPTS \
   --name $CONTAINER_NAME \
   $IMAGE_NAME || exit 1
 
