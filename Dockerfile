@@ -9,7 +9,8 @@ RUN apt-get update && \
     apt-get -y install gitk git-gui && \
     apt-get -y install cmake-curses-gui gdb valgrind sysvinit-utils && \
     apt-get -y install nomacs && \
-    apt-get -y install mesa-utils
+    apt-get -y install mesa-utils && \
+    apt-get -y install cpu-checker # for kvm-ok command
 
 RUN update-alternatives --set gcc /usr/bin/gcc-11
 RUN update-alternatives --set g++ /usr/bin/g++-11
