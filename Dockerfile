@@ -1,4 +1,5 @@
-FROM invent-registry.kde.org/sysadmin/ci-images/krita-appimage-builder as base_image
+ARG BASE_IMAGE=krita-appimage-builder
+FROM invent-registry.kde.org/sysadmin/ci-images/${BASE_IMAGE} as base_image
 MAINTAINER Dmitry Kazakov <dimula73@gmail.com>
 
 USER root
@@ -50,8 +51,8 @@ CMD tail -f /dev/null
 FROM base_image
 
 # a hackish way to copy the deps only if they exist
-COPY .foo persistent/deps/_install/ ${USRHOME}/appimage-workspace/deps/usr/
-ADD .foo persistent/qtcreator-package.tar.g[z] ${USRHOME}/
+COPY --chown=appimage:appimage .foo persistent/deps/_install/ ${USRHOME}/appimage-workspace/deps/usr/
+ADD --chown=appimage:appimage .foo persistent/qtcreator-package.tar.g[z] ${USRHOME}/
 RUN rm ${USRHOME}/appimage-workspace/deps/usr/.foo ${USRHOME}/.foo
 
 CMD tail -f /dev/null

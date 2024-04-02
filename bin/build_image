@@ -7,15 +7,17 @@ Build an image for the container\n
 where:\n
     -h,      --help              show this help text\n
     -s,     --skip-deps          skip unpacking deps\n
+    -a,     --android            build an android image\n
 \n
 If no IMAGE_NAME is given, it is deduced from the\n 
 current directory name    
 "
 
 DEPS_EXTRA_ARGS=
+BASE_IMAGE="krita-appimage-builder"
 
 # Call getopt to validate the provided input. 
-options=$(getopt -o sh --long skip-deps,help -- "$@")
+options=$(getopt -o ash --long skip-deps,help,android -- "$@")
 [ $? -eq 0 ] || { 
     echo "Incorrect options provided"
     exit 1
@@ -25,6 +27,9 @@ while true; do
     case "$1" in
     -s | --skip-deps)
         DEPS_EXTRA_ARGS="--target=base_image"
+        ;;
+    -a | --android)
+        BASE_IMAGE="krita-android-builder"
         ;;
     -h | --help)
         echo -e $usage >&2
@@ -48,4 +53,4 @@ if [[ -z ${IMAGE_NAME} ]]; then
     echo Auto-select image name: ${IMAGE_NAME}
 fi
 
-${DOCKER_BINARY} build -t $IMAGE_NAME . ${DEPS_EXTRA_ARGS}
+${DOCKER_BINARY} build -t $IMAGE_NAME . ${DEPS_EXTRA_ARGS} --build-arg BASE_IMAGE=$BASE_IMAGE
