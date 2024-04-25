@@ -10,4 +10,5 @@ fi
 
 tryCreatePulseaudioSocket
 tryCreateXAuthCookieFile
+runUserInitializationHooks
 ${DOCKER_BINARY} start ${container_name}

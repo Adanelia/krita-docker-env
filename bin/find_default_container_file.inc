@@ -3,6 +3,7 @@
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 source ${DIR}/try_create_pulseaudio_socket.inc
 source ${DIR}/try_create_xauth_cookie_file.inc
+source ${DIR}/run_user_initialization_hooks.inc
 
 if groups | grep docker > /dev/null 2>&1; then
     DOCKER_BINARY=docker
@@ -46,6 +47,7 @@ function tryStartContainer {
     if [ -z ${container_id} ]; then
         tryCreatePulseaudioSocket
         tryCreateXAuthCookieFile
+        runUserInitializationHooks
         ${DOCKER_BINARY} start ${container_name}
     fi
 }

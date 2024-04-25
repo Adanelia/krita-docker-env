@@ -65,6 +65,7 @@ fi
 
 tryCreatePulseaudioSocket
 tryCreateXAuthCookieFile
+runUserInitializationHooks
 
 ${DOCKER_BINARY} run -P -t -d \
   $EXTRA_DOCKER_MOUNTS \
