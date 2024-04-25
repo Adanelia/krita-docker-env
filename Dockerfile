@@ -2,6 +2,9 @@ ARG BASE_IMAGE=krita-appimage-builder
 FROM invent-registry.kde.org/sysadmin/ci-images/${BASE_IMAGE} as base_image
 MAINTAINER Dmitry Kazakov <dimula73@gmail.com>
 
+ARG APPIMAGE_UID=1000
+ARG APPIMAGE_GID=1000
+
 USER root
 
 RUN apt-get update && \
@@ -19,6 +22,8 @@ RUN update-alternatives --set g++ /usr/bin/g++-11
 ENV USRHOME=/home/appimage
 
 RUN chsh -s /bin/bash appimage
+RUN groupmod -g ${APPIMAGE_GID} appimage
+RUN usermod -u ${APPIMAGE_UID} -g ${APPIMAGE_GID} appimage
 
 RUN locale-gen en_US.UTF-8
 

@@ -53,4 +53,6 @@ if [[ -z ${IMAGE_NAME} ]]; then
     echo Auto-select image name: ${IMAGE_NAME}
 fi
 
-${DOCKER_BINARY} build -t $IMAGE_NAME . ${DEPS_EXTRA_ARGS} --build-arg BASE_IMAGE=$BASE_IMAGE
+${DOCKER_BINARY} build -t $IMAGE_NAME . ${DEPS_EXTRA_ARGS} \
+    --build-arg APPIMAGE_UID=$(id -u) \
+    --build-arg APPIMAGE_GID=$(id -g)
