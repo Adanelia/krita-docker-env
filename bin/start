@@ -9,4 +9,5 @@ if [ -z ${container_name} ]; then
 fi
 
 tryCreatePulseaudioSocket
+tryCreateXAuthCookieFile
 ${DOCKER_BINARY} start ${container_name}
