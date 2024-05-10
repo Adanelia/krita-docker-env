@@ -15,6 +15,12 @@ Firstly make sure you have Docker installed
 sudo apt install docker docker.io
 ```
 
+Secondly make sure that you have python3 and python3-venv packages installed:
+
+```bash
+sudo apt install python3 python3-venv
+```
+
 Then you need to download deps and Krita source tree. These steps are not
 included into the *Dockerfile* to save internal bandwidth (most Krita
 developers already have al least one clone of Krita source tree).
