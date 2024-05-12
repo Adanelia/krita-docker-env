@@ -62,7 +62,7 @@ if [ ! -d $WORK_DIR/_install ]; then
             )
         fi
         if [ ! -d ./krita-deps-management/ci-utilities ]; then
-            git clone https://invent.kde.org/dkazakov/ci-utilities.git -b work/split-ci-branch krita-deps-management/ci-utilities
+            git clone https://invent.kde.org/dkazakov/ci-utilities.git krita-deps-management/ci-utilities
         else
             (
                 cd ./krita-deps-management/ci-utilities
