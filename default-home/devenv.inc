@@ -34,3 +34,11 @@ mkdir -p /home/appimage/persistent/downloads
 # It takes a lot of time to finalize the leaks 
 # and we usually just check for invalid access
 export ASAN_OPTIONS=detect_leaks=0
+
+# Add AppImage simulation variables to make sure MLT library works
+# fine
+
+if [[ -z $ANDROID_HOME ]]; then
+   export APPIMAGE=1
+   export APPDIR=/home/appimage/appimage-workspace/deps/
+fi
