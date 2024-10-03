@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Official instructions come from here:
+# https://dgpu-docs.intel.com/driver/client/overview.html
+
 cat /home/appimage/intel/intel-graphics-old.gpg | gpg --yes --dearmor --output /usr/share/keyrings/intel-graphics.gpg
 
 echo "deb [arch=amd64 signed-by=/usr/share/keyrings/intel-graphics.gpg] https://repositories.intel.com/gpu/ubuntu focal client" | \
