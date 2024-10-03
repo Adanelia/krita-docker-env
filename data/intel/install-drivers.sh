@@ -10,7 +10,7 @@ echo "deb [arch=amd64 signed-by=/usr/share/keyrings/intel-graphics.gpg] https://
 
 apt update
 
-apt install --upgrade --download-only \
+apt install --upgrade \
     libdrm-amdgpu1 \
     libdrm-common \
     libdrm-dev \
