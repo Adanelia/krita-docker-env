@@ -49,7 +49,7 @@ fi
 (
     echo "### Building krita..."
     cd ~/appimage-workspace/krita-build
-    make -j$JOBS install || exit 1
+    cmake --build . -j$JOBS --target install || exit 1
 )
 
 echo "### Building AppImage..."
@@ -66,5 +66,5 @@ rm -rf ~/appimage-workspace/krita.appdir/* || exit 4
 (
     echo "### Repopulate build directory..."
     cd ~/appimage-workspace/krita-build
-    make -j$JOBS install/fast > /dev/null || exit 5
+    cmake --build . -j$JOBS --target install > /dev/null || exit 5
 )
