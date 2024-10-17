@@ -5,15 +5,17 @@ usage=\
 Bootstrap deps for building the docker image\n
 \n
 where:\n
-    -h,      --help              show this help text\n
-    -a ARCH, --android=ARCH      target architecture ('x86_64', 'armeabi-v7a', 'arm64-v8a')\n
+    -h,        --help              show this help text\n
+    -a ARCH,   --android=ARCH      target architecture ('x86_64', 'armeabi-v7a', 'arm64-v8a')\n
+    -b BRANCH, --branch=BRANCH     a custom branch for fetching Krita deps\n
 \n
 "
 
-DEPS_EXTRA_ARGS=
+ANDROID_ARG=
+BRANCH_ARG=
 
 # Call getopt to validate the provided input.
-options=$(getopt -o "ha:" --long "help android:" -- "$@")
+options=$(getopt -o "ha:b:" --long "help android: branch:" -- "$@")
 [ $? -eq 0 ] || {
     echo "Incorrect options provided"
     exit 1
@@ -21,8 +23,11 @@ options=$(getopt -o "ha:" --long "help android:" -- "$@")
 eval set -- "$options"
 while true; do
     case "$1" in
+    -b | --branch)
+        BRANCH_ARG="--branch=$2"
+        ;;
     -a | --android)
-        DEPS_EXTRA_ARGS=--android=$2
+        ANDROID_ARG="--android=$2"
         ;;
     -h | --help)
         echo -e $usage >&2
@@ -42,7 +47,7 @@ fi
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
-$DIR/bootstrap-krita-deps.sh $DEPS_EXTRA_ARGS
+$DIR/bootstrap-krita-deps.sh $ANDROID_ARG $BRANCH_ARG
 
 if [ ! -f ./persistent/qtcreator-package.tar.gz ]; then
     (
