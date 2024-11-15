@@ -57,8 +57,14 @@ echo "### Building AppImage..."
 cd ~/appimage-workspace
 ~/persistent/krita/packaging/linux/appimage/build-image.sh ~/appimage-workspace/ ~/persistent/krita || exit 2
 
-echo "### Move AppImage to persistent location:" `ls ~/appimage-workspace/*.appimage`
-mv ~/appimage-workspace/*.appimage ~/persistent/ || exit 3
+
+if [ -f ~/appimage-workspace/*.AppImage ]; then
+    echo "### Move AppImage to persistent location:" `ls ~/appimage-workspace/*.AppImage`
+    mv ~/appimage-workspace/*.AppImage ~/persistent/ || exit 3
+else
+    echo "### Move AppImage to persistent location:" `ls ~/appimage-workspace/*.appimage`
+    mv ~/appimage-workspace/*.appimage ~/persistent/ || exit 3
+fi
 
 echo "### Clean up build directory..."
 rm -rf ~/appimage-workspace/krita.appdir/* || exit 4
