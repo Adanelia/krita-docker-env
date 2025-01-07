@@ -10,8 +10,8 @@ fi
 
 tryStartContainer $container_name
 
-if ${DOCKER_BINARY} exec -ti ${container_name} sh -c "ls /home/appimage/appimage-workspace/krita-build > /dev/null 2>&1"; then
-    ${DOCKER_BINARY} exec -ti ${container_name} sh -c "cd /home/appimage/appimage-workspace/krita-build && ~/bin/run_cmake.sh ~/persistent/krita && make -j8 install && ~/bin/build_krita_appimage.sh"
+if ${DOCKER_BINARY} exec -i ${container_name} sh -c "ls /home/appimage/appimage-workspace/krita-build > /dev/null 2>&1"; then
+    ${DOCKER_BINARY} exec -i ${container_name} sh -c "cd /home/appimage/appimage-workspace/krita-build && ~/bin/run_cmake.sh ~/persistent/krita && make -j8 install && ~/bin/build_krita_appimage.sh"
 else
-    ${DOCKER_BINARY} exec -ti ${container_name} sh -c "cd /home/appimage && ~/bin/run_cmake.sh ~/persistent/krita && make -j8 install && ~/bin/build_krita_appimage.sh"
+    ${DOCKER_BINARY} exec -i ${container_name} sh -c "cd /home/appimage && ~/bin/run_cmake.sh ~/persistent/krita && make -j8 install && ~/bin/build_krita_appimage.sh"
 fi
